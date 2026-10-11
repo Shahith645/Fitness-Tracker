@@ -1,83 +1,92 @@
-# ⚡ FitTrack — Electron Desktop App
+# FitTrack
 
-Personal fitness tracker built with React + Electron for Windows.
+![Electron](https://img.shields.io/badge/Electron-28-47848F?logo=electron&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=black)
+![Recharts](https://img.shields.io/badge/Charts-Recharts-22b5bf)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6?logo=windows&logoColor=white)
 
-## 📁 Project Structure
+A desktop fitness tracker for **managing regular workouts and progressive overload**. Log sets, reps and weight by muscle group, review past sessions to beat your last numbers, track body weight over time, set goals and keep your streak alive.
+
+<p align="center">
+  <img src="docs/screenshots/screenshot-1.png" alt="Dashboard" width="800">
+</p>
+<p align="center">
+  <img src="docs/screenshots/screenshot-2.png" alt="Log a workout" width="400">
+  <img src="docs/screenshots/screenshot-3.png" alt="Body metrics" width="400">
+</p>
+
+## Features
+
+- **Dashboard:** total workouts, current streak, body-log entries and goals at a glance.
+- **Workout logger:** pick a category (chest, back, legs, arms, shoulders, core, cardio, full body), choose or type an exercise, then record sets, reps, weight and a note.
+- **Rest timer** between sets.
+- **Body tracking:** log body weight and height and see the history as a chart.
+- **History:** browse every past workout so you can beat last session's numbers.
+- **Goals:** create goals such as "Bench 100 kg" or "Workout 5x/week" and tick them off.
+- **Achievements and streaks** to keep you consistent.
+- **AI Coach (optional):** ask for a workout suggestion or a progress review using a **local** [Ollama](https://ollama.com) model, so your data never leaves your computer.
+- **Offline first:** everything is saved on your device.
+
+## Tech stack
+
+| Layer | Technology |
+| --- | --- |
+| Shell | Electron 28 (secure preload bridge, context isolation) |
+| UI | React 18 (Create React App) |
+| Charts | Recharts |
+| Storage | Browser `localStorage` inside Electron |
+| Packaging | electron-builder (NSIS Windows installer) |
+
+## Project structure
 
 ```
-fittrack-electron/
-├── main.js          ← Electron main process (window, menu)
-├── preload.js       ← Secure bridge between Electron & React
-├── package.json     ← Dependencies & build config
+Fitness-Tracker/
+├── main.js          # Electron main process (window, menu)
+├── preload.js       # Secure bridge between Electron and React
+├── package.json     # Dependencies and build config
 ├── public/
-│   └── index.html   ← HTML shell
+│   └── index.html   # HTML shell
 └── src/
-    ├── index.js     ← React entry point
-    └── App.jsx      ← Full FitTrack app (all features)
+    ├── index.js     # React entry point
+    └── App.jsx      # The whole FitTrack app
 ```
 
-## 🚀 Getting Started
+## Getting started
 
-### 1. Prerequisites
-- [Node.js](https://nodejs.org/) v18 or higher
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) 18 or newer
 - npm (comes with Node)
+- Optional, for the AI Coach: [Ollama](https://ollama.com) with a model pulled, for example `ollama pull llama3`
 
-### 2. Install dependencies
+### Install and run
+
 ```bash
+git clone https://github.com/Shahith645/Fitness-Tracker.git
+cd Fitness-Tracker
 npm install
-```
-
-### 3. Run in development mode
-```bash
 npm run dev
 ```
-This starts the React dev server on port 3000, then launches Electron pointing at it.
 
-### 4. Build a Windows installer (.exe)
+`npm run dev` starts the React dev server on port 3000 and opens the Electron window once it is ready.
+
+### Build a Windows installer
+
 ```bash
 npm run dist
 ```
-Output will be in the `dist/` folder as a `.exe` NSIS installer.
 
----
+The `.exe` installer is created in the `dist/` folder.
 
-## 🤖 AI Coach Setup
-The AI Coach tab uses the Anthropic Claude API.
+> The build config points to `public/icon.ico`. Add your own icon file there, or remove the `icon` lines from `package.json`, before running `npm run dist`.
 
-The API call is made directly from the renderer (React). For a production app, you should proxy this through a backend to keep your key secure. For personal use, you can add the key to the fetch call in `src/App.jsx`:
+### Using the AI Coach
 
-```js
-headers: {
-  "Content-Type": "application/json",
-  "x-api-key": "YOUR_KEY_HERE",        // add this line
-  "anthropic-version": "2023-06-01",   // add this line
-},
-```
+1. Start Ollama: `ollama serve`
+2. Pull a model: `ollama pull llama3`
+3. Open the **AI Coach** tab and pick the model (or type your own).
 
----
+## Author
 
-## 🔧 Customization Tips
-
-| What | Where |
-|------|-------|
-| App colors / theme | Top of `src/App.jsx` (ACCENT, BG, CARD etc.) |
-| Window size | `main.js` → `width`, `height` |
-| Preset exercises | `PRESET_EXERCISES` in `src/App.jsx` |
-| Achievements | `ACHIEVEMENTS` array in `src/App.jsx` |
-| App icon | Replace `public/icon.ico` (256×256 .ico file) |
-
----
-
-## 📦 Tech Stack
-- **Electron 28** — Desktop shell
-- **React 18** — UI framework  
-- **Recharts** — Progress graphs
-- **localStorage** — Data persistence
-- **Anthropic Claude API** — AI Coach
-- **electron-builder** — Windows packaging
-
-## 🪟 Windows Build Output
-`dist/FitTrack Setup 1.0.0.exe` — NSIS installer with:
-- Custom install directory choice
-- Start menu shortcut
-- Uninstaller included
+**Shahith S**, final-year CSE student at University College of Engineering, Nagercoil
+[GitHub](https://github.com/Shahith645) · [LinkedIn](https://www.linkedin.com/in/shahith-s/)
